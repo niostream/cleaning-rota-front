@@ -1,0 +1,93 @@
+<template>
+  <v-container>
+    <!-- 一般メニュー -->
+    <v-layout justify-center>
+      <h1>メニュー一覧</h1>
+    </v-layout>
+    <v-layout wrap>
+      <v-row>
+        <v-col :sm="4">
+          <v-card>
+            <v-img :src="cleaningRotaImg" />
+            <v-card-title>掃除当番表</v-card-title>
+            <v-card-actions>
+              <v-btn outlined rounded class="blue blue-text">説明</v-btn>
+              <v-btn outlined rounded class="blue blue-text" @click="forwardCleaningRota">実行</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+        <v-col :sm="4">
+          <v-card>
+            <v-img :src="passwordImg" />
+            <v-card-title>パスワード変更</v-card-title>
+            <v-card-actions>
+              <v-btn outlined rounded class="blue blue-text">説明</v-btn>
+              <v-btn outlined rounded class="blue blue-text" @click="forwardChangePassword">実行</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+        <v-col :sm="4">
+          <v-card>
+            <v-img :src="logoutImg" />
+            <v-card-title>ログアウト</v-card-title>
+            <v-card-actions>
+              <v-btn outlined rounded class="blue blue-text">説明</v-btn>
+              <v-btn outlined rounded class="blue blue-text" @click="forwardLogin">実行</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-layout>
+    <!-- /一般メニュー -->
+    <!-- 管理者メニュー -->
+    <v-layout justify-center>
+      <h1>管理者メニュー</h1>
+    </v-layout>
+    <v-layout wrap>
+      <v-row>
+        <v-col :sm="4">
+          <v-card>
+            <v-img :src="registUserImg" />
+            <v-card-title>ユーザー登録</v-card-title>
+            <v-card-actions>
+              <v-btn outlined rounded class="blue blue-text">説明</v-btn>
+              <v-btn outlined rounded class="blue blue-text" @click="forwardRegistUser">実行</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-layout>
+    <!-- /管理者メニュー -->
+  </v-container>
+</template>
+
+<script>
+export default {
+  name: "mainMenu",
+  data() {
+    return {
+      cleaningRotaImg: "/img/main-menu/menu-cleaning-rota.png",
+      passwordImg: "/img/main-menu/menu-password.png",
+      logoutImg: "/img/main-menu/menu-logout.png",
+      registUserImg: "/img/main-menu/menu-regist-user.png"
+    };
+  },
+  methods: {
+    forwardCleaningRota() {
+      this.$router.push("/cleaning-rota");
+    },
+    forwardChangePassword() {
+      this.$router.push("/change-password");
+    },
+    forwardLogin() {
+      this.$router.push("/");
+    },
+    forwardRegistUser() {
+      this.$router.push("/regist-user");
+    }
+  }
+};
+</script>
+
+<style scoped>
+</style>
