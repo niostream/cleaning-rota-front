@@ -27,8 +27,8 @@ export default {
       const x = await axios
         .get("http://localhost:8081/param", {
           params: {
-            before: "2019-06-01",
-            after: "2019-07-01"
+            fromDate: "2019-06-01",
+            toDate: "2019-07-01"
           }
         })
         .then(res => {
@@ -42,7 +42,7 @@ export default {
       console.log(x);
       // this.dummyText = x;
       if (x !== null) {
-        this.dummyText = x;
+        this.dummyText = x[0].item.itemName;
       } else {
         this.dummyText = "error...Springを起動してください";
       }
