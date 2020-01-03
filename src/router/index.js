@@ -5,6 +5,7 @@ import MainMenu from '../components/MainMenu.vue'
 import CleaningRota from '../components/CleaningRota.vue'
 import ChangePassword from '../components/ChangePassword.vue'
 import RegistUser from '../components/RegistUser.vue'
+import Try from '../components/Try.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/regist-user',
     name: 'RegistUser',
     component: RegistUser
+  },
+  {
+    path: '/try',
+    name: 'Try',
+    component: Try
   },
   {
     path: '/about',

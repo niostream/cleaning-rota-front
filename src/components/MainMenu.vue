@@ -55,6 +55,18 @@
             </v-card-actions>
           </v-card>
         </v-col>
+        <!-- 検証用 -->
+        <v-col :sm="4">
+          <v-card>
+            <v-img :src="registUserImg" />
+            <v-card-title>Java連携テスト</v-card-title>
+            <v-card-actions>
+              <v-btn outlined rounded class="blue blue-text">説明</v-btn>
+              <v-btn outlined rounded class="blue blue-text" @click="forwardTry">実行</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+        <!-- /検証用 -->
       </v-row>
     </v-layout>
     <!-- /管理者メニュー -->
@@ -84,6 +96,9 @@ export default {
     },
     forwardRegistUser() {
       this.$router.push("/regist-user");
+    },
+    forwardTry() {
+      this.$router.push("/try");
     }
   }
 };
