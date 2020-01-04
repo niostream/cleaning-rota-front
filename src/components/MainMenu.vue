@@ -74,6 +74,9 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+import { UPDATE_USER } from "@/store/mutation-types";
+
 export default {
   name: "mainMenu",
   data() {
@@ -84,7 +87,9 @@ export default {
       registUserImg: "/img/main-menu/menu-regist-user.png"
     };
   },
+  computed: mapGetters(["getUser"]),
   methods: {
+    ...mapActions([UPDATE_USER]),
     forwardCleaningRota() {
       this.$router.push("/cleaning-rota");
     },
@@ -92,6 +97,7 @@ export default {
       this.$router.push("/change-password");
     },
     forwardLogin() {
+      this[UPDATE_USER]([]);
       this.$router.push("/");
     },
     forwardRegistUser() {
