@@ -1,5 +1,9 @@
 <template>
   <v-container>
+    <v-snackbar v-model="errorSnackbar" top>
+      {{ errorText }}
+      <v-btn color="white" text @click="errorSnackbar = false">Close</v-btn>
+    </v-snackbar>
     <v-layout my-3 justify-center>
       <h1>掃除当番表</h1>
     </v-layout>
@@ -8,12 +12,12 @@
       <v-form class="login-form-layout">
         <!-- ユーザーID -->
         <v-layout>
-          <v-text-field label="ユーザーID" type="text" v-model="userId" required autofocus />
+          <v-text-field label="ユーザーID" type="text" v-model="user.userId" required autofocus />
         </v-layout>
         <!-- /ユーザーID -->
         <!-- パスワード -->
         <v-layout>
-          <v-text-field label="パスワード" type="password" v-model="password" required />
+          <v-text-field label="パスワード" type="password" v-model="user.password" required />
         </v-layout>
         <!-- /パスワード -->
         <!-- ログインボタン -->
@@ -28,17 +32,48 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+import { UPDATE_USER } from "@/store/mutation-types";
+import axios from "axios";
+
 export default {
   name: "login",
   data() {
     return {
-      userId: "",
-      password: ""
+      errorSnackbar: false,
+      errorText: "",
+      user: {
+        userId: "",
+        password: ""
+      }
     };
   },
+  computed: mapGetters(["getUser"]),
   methods: {
-    loginAction() {
-      this.$router.push("/main-menu");
+    ...mapActions([UPDATE_USER]),
+    async loginAction() {
+      const userInfo = await axios
+        .get("http://localhost:8081/login", {
+          params: {
+            userId: this.user.userId,
+            password: this.user.password
+          }
+        })
+        .then(res => {
+          console.log(res);
+          return res.data;
+        })
+        .catch(error => {
+          console.log(error);
+          return null;
+        });
+      if (userInfo) {
+        this[UPDATE_USER](this.user);
+        this.$router.push("/main-menu");
+      } else {
+        this.errorText = "ログイン認証に失敗しました。";
+        this.errorSnackbar = true;
+      }
     }
   }
 };
