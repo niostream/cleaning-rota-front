@@ -14,63 +14,66 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <!-- 入力エラー表示バー -->
+    <!-- 入力エラー表示スナックバー -->
     <v-snackbar v-model="errorSnackbar" top>
       {{ errorText }}
       <v-btn color="white" text @click="errorSnackbar = false">Close</v-btn>
     </v-snackbar>
-    <!-- 画面表示エリア -->
-    <v-layout my-3 justify-center>
-      <h1>パスワード変更</h1>
-    </v-layout>
-    <v-layout justify-center>
-      <!-- パスワード変更フォーム -->
-      <v-form class="login-form-layout">
-        <!-- 変更前パスワード -->
-        <v-layout>
-          <v-text-field
-            label="変更前パスワード"
-            type="password"
-            v-model="defaultPassword"
-            required
-            autofocus
-          />
-        </v-layout>
-        <!-- /変更前パスワード -->
-        <!-- 変更パスワード -->
-        <v-layout>
-          <v-text-field
-            label="変更パスワード"
-            type="password"
-            v-model="changePassword"
-            required
-          />
-        </v-layout>
-        <!-- /変更パスワード -->
-        <!-- 確認パスワード -->
-        <v-layout>
-          <v-text-field
-            label="確認パスワード"
-            type="password"
-            v-model="confirmPassword"
-            required
-          />
-        </v-layout>
-        <!-- /確認パスワード -->
-        <!-- 変更ボタン -->
-        <v-layout my-3 justify-center>
-          <v-btn
-            outlined
-            rounded
-            class="blue blue-text"
-            @click="changePasswordAction"
-            >変更</v-btn
-          >
-        </v-layout>
-        <!-- /変更ボタン -->
-      </v-form>
-      <!-- /パスワード変更フォーム -->
-    </v-layout>
+    <!-- パスワード変更画面エリア -->
+    <v-container>
+      <v-layout my-3 justify-center>
+        <h1>パスワード変更</h1>
+      </v-layout>
+      <v-layout justify-center>
+        <!-- パスワード変更フォーム -->
+        <v-form class="login-form-layout">
+          <!-- 変更前パスワード -->
+          <v-layout>
+            <v-text-field
+              label="変更前パスワード"
+              type="password"
+              v-model="defaultPassword"
+              required
+              autofocus
+            />
+          </v-layout>
+          <!-- /変更前パスワード -->
+          <!-- 変更パスワード -->
+          <v-layout>
+            <v-text-field
+              label="変更パスワード"
+              type="password"
+              v-model="changePassword"
+              required
+            />
+          </v-layout>
+          <!-- /変更パスワード -->
+          <!-- 確認パスワード -->
+          <v-layout>
+            <v-text-field
+              label="確認パスワード"
+              type="password"
+              v-model="confirmPassword"
+              required
+            />
+          </v-layout>
+          <!-- /確認パスワード -->
+          <!-- 変更ボタン -->
+          <v-layout my-3 justify-center>
+            <v-btn
+              outlined
+              rounded
+              class="blue blue-text"
+              @click="changePasswordAction"
+              >変更</v-btn
+            >
+          </v-layout>
+          <!-- /変更ボタン -->
+        </v-form>
+        <!-- /パスワード変更フォーム -->
+      </v-layout>
+    </v-container>
+    <!-- /パスワード変更画面エリア -->
   </v-container>
 </template>
 

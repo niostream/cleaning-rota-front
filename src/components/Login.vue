@@ -1,33 +1,51 @@
 <template>
   <v-container>
+    <!-- 入力エラー表示スナックバー -->
     <v-snackbar v-model="errorSnackbar" top>
       {{ errorText }}
       <v-btn color="white" text @click="errorSnackbar = false">Close</v-btn>
     </v-snackbar>
-    <v-layout my-3 justify-center>
-      <h1>掃除当番表</h1>
-    </v-layout>
-    <v-layout justify-center>
-      <!-- ログインフォーム -->
-      <v-form class="login-form-layout">
-        <!-- ユーザーID -->
-        <v-layout>
-          <v-text-field label="ユーザーID" type="text" v-model="user.userId" required autofocus />
-        </v-layout>
-        <!-- /ユーザーID -->
-        <!-- パスワード -->
-        <v-layout>
-          <v-text-field label="パスワード" type="password" v-model="user.password" required />
-        </v-layout>
-        <!-- /パスワード -->
-        <!-- ログインボタン -->
-        <v-layout my-3 justify-center>
-          <v-btn outlined rounded class="blue blue-text" @click="loginAction">Log in</v-btn>
-        </v-layout>
-        <!-- /ログインボタン -->
-      </v-form>
-      <!-- /ログインフォーム -->
-    </v-layout>
+    <!-- ログイン画面エリア -->
+    <v-container>
+      <v-layout my-3 justify-center>
+        <h1>掃除当番表</h1>
+      </v-layout>
+      <v-layout justify-center>
+        <!-- ログインフォーム -->
+        <v-form class="login-form-layout">
+          <!-- ユーザーID -->
+          <v-layout>
+            <v-text-field
+              label="ユーザーID"
+              type="text"
+              v-model="userId"
+              required
+              autofocus
+            />
+          </v-layout>
+          <!-- /ユーザーID -->
+          <!-- パスワード -->
+          <v-layout>
+            <v-text-field
+              label="パスワード"
+              type="password"
+              v-model="password"
+              required
+            />
+          </v-layout>
+          <!-- /パスワード -->
+          <!-- ログインボタン -->
+          <v-layout my-3 justify-center>
+            <v-btn outlined rounded class="blue blue-text" @click="loginAction"
+              >Log in</v-btn
+            >
+          </v-layout>
+          <!-- /ログインボタン -->
+        </v-form>
+        <!-- /ログインフォーム -->
+      </v-layout>
+    </v-container>
+    <!-- /ログイン画面エリア -->
   </v-container>
 </template>
 
@@ -42,10 +60,8 @@ export default {
     return {
       errorSnackbar: false,
       errorText: "",
-      user: {
-        userId: "",
-        password: ""
-      }
+      userId: "",
+      password: ""
     };
   },
   computed: mapGetters(["getUser"]),
@@ -55,20 +71,24 @@ export default {
       const userInfo = await axios
         .get("http://localhost:8081/login", {
           params: {
-            userId: this.user.userId,
-            password: this.user.password
+            userId: this.userId,
+            password: this.password
           }
         })
         .then(res => {
           console.log(res);
           return res.data;
         })
-        .catch(error => {
-          console.log(error);
+        .catch(err => {
+          console.log(err);
           return null;
         });
       if (userInfo) {
-        this[UPDATE_USER](this.user);
+        const user = {
+          userId: userInfo.userId,
+          adminFlag: userInfo.configAdmin.adminFlag
+        };
+        this[UPDATE_USER](user);
         this.$router.push("/main-menu");
       } else {
         this.errorText = "ログイン認証に失敗しました。";
