@@ -6,10 +6,20 @@
         <h1>掃除当番表一覧</h1>
       </v-layout>
       <v-layout my-3 justify-space-around="1">
-        <v-btn outlined rounded class="green accent-1">前月</v-btn>
-        <v-btn outlined rounded class="green accent-1">表示切替</v-btn>
+        <v-btn outlined rounded class="green accent-1" @click="prevRecord"
+          >前月</v-btn
+        >
+        <v-btn
+          outlined
+          rounded
+          class="green accent-1"
+          @click="switchDisp = !switchDisp"
+          >表示切替</v-btn
+        >
         <v-btn outlined rounded class="green accent-1">Excel出力</v-btn>
-        <v-btn outlined rounded class="green accent-1">次月</v-btn>
+        <v-btn outlined rounded class="green accent-1" @click="nextRecord"
+          >次月</v-btn
+        >
       </v-layout>
       <v-layout my-3>
         <v-data-table
@@ -22,47 +32,69 @@
             <tr>
               <td>{{ row.item.date }}</td>
               <td>
-                <v-btn v-if="!row.item.kitchen" class="blue">登録</v-btn>
+                <v-btn v-if="!row.item.kitchen && switchDisp" class="blue"
+                  >登録</v-btn
+                >
                 <div v-else>{{ row.item.kitchen }}</div>
               </td>
               <td>
-                <v-btn v-if="!row.item.bath" class="blue">登録</v-btn>
+                <v-btn v-if="!row.item.bath && switchDisp" class="blue"
+                  >登録</v-btn
+                >
                 <div v-else>{{ row.item.bath }}</div>
               </td>
               <td>
-                <v-btn v-if="!row.item.toilet" class="blue">登録</v-btn>
+                <v-btn v-if="!row.item.toilet && switchDisp" class="blue"
+                  >登録</v-btn
+                >
                 <div v-else>{{ row.item.toilet }}</div>
               </td>
               <td>
-                <v-btn v-if="!row.item.basin" class="blue">登録</v-btn>
+                <v-btn v-if="!row.item.basin && switchDisp" class="blue"
+                  >登録</v-btn
+                >
                 <div v-else>{{ row.item.basin }}</div>
               </td>
               <td>
-                <v-btn v-if="!row.item.cleaner" class="blue">登録</v-btn>
+                <v-btn v-if="!row.item.cleaner && switchDisp" class="blue"
+                  >登録</v-btn
+                >
                 <div v-else>{{ row.item.cleaner }}</div>
               </td>
               <td>
-                <v-btn v-if="!row.item.combustible" class="blue">登録</v-btn>
+                <v-btn v-if="!row.item.combustible && switchDisp" class="blue"
+                  >登録</v-btn
+                >
                 <div v-else>{{ row.item.combustible }}</div>
               </td>
               <td>
-                <v-btn v-if="!row.item.incombustible" class="blue">登録</v-btn>
+                <v-btn v-if="!row.item.incombustible && switchDisp" class="blue"
+                  >登録</v-btn
+                >
                 <div v-else>{{ row.item.incombustible }}</div>
               </td>
               <td>
-                <v-btn v-if="!row.item.resource" class="blue">登録</v-btn>
+                <v-btn v-if="!row.item.resource && switchDisp" class="blue"
+                  >登録</v-btn
+                >
                 <div v-else>{{ row.item.resource }}</div>
               </td>
               <td>
-                <v-btn v-if="!row.item.electricity" class="blue">登録</v-btn>
+                <v-btn v-if="!row.item.electricity && switchDisp" class="blue"
+                  >登録</v-btn
+                >
                 <div v-else>{{ row.item.electricity }}</div>
               </td>
               <td>
-                <v-btn v-if="!row.item.gas" class="blue">登録</v-btn>
+                <v-btn v-if="!row.item.gas && switchDisp" class="blue"
+                  >登録</v-btn
+                >
                 <div v-else>{{ row.item.gas }}</div>
               </td>
               <td>
-                <v-btn v-if="!row.item.tap" class="blue">登録</v-btn>
+                <v-btn v-if="!row.item.tap && switchDisp" class="blue"
+                  >登録</v-btn
+                >
                 <div v-else>{{ row.item.tap }}</div>
               </td>
             </tr>
@@ -70,10 +102,20 @@
         </v-data-table>
       </v-layout>
       <v-layout my-3 justify-space-around="1">
-        <v-btn outlined rounded class="green accent-1">前月</v-btn>
-        <v-btn outlined rounded class="green accent-1">表示切替</v-btn>
+        <v-btn outlined rounded class="green accent-1" @click="prevRecord"
+          >前月</v-btn
+        >
+        <v-btn
+          outlined
+          rounded
+          class="green accent-1"
+          @click="switchDisp = !switchDisp"
+          >表示切替</v-btn
+        >
         <v-btn outlined rounded class="green accent-1">Excel出力</v-btn>
-        <v-btn outlined rounded class="green accent-1">次月</v-btn>
+        <v-btn outlined rounded class="green accent-1" @click="nextRecord"
+          >次月</v-btn
+        >
       </v-layout>
     </v-container>
     <!-- /掃除当番表画面エリア -->
@@ -86,6 +128,9 @@ import axios from "axios";
 export default {
   data() {
     return {
+      year: "",
+      month: "",
+      switchDisp: true,
       headers: [
         {
           text: "日付",
@@ -126,9 +171,15 @@ export default {
     };
   },
   created() {
+    this.year = new Date().getFullYear();
+    this.month = new Date().getMonth() + 1;
+    // console.log("年月:", this.year, "/", this.month);
     this.getItem();
   },
   methods: {
+    /**
+     * 掃除当番表アイテム取得
+     */
     async getItem() {
       const itemList = await axios
         .get("http://localhost:8081/cleaning-rota/item-list")
@@ -150,6 +201,24 @@ export default {
           value: element.itemValue
         });
       });
+    },
+    prevRecord() {
+      if (this.month === 1) {
+        this.year -= 1;
+        this.month = 12;
+      } else {
+        this.month -= 1;
+      }
+      // console.log("前年月:", this.year, "/", this.month);
+    },
+    nextRecord() {
+      if (this.month === 12) {
+        this.year += 1;
+        this.month = 1;
+      } else {
+        this.month += 1;
+      }
+      // console.log("後年月:", this.year, "/", this.month);
     }
   }
 };
