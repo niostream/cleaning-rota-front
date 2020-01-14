@@ -1,8 +1,9 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import { UPDATE_USER } from './mutation-types'
+import Vue from "vue";
+import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
+import { UPDATE_USER } from "./mutation-types";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -15,14 +16,14 @@ export default new Vuex.Store({
   },
   mutations: {
     [UPDATE_USER](state, payload) {
-      state.user = payload
-    },
+      state.user = payload;
+    }
   },
   actions: {
     [UPDATE_USER]({ commit }, payload) {
-      commit(UPDATE_USER, payload)
-    },
+      commit(UPDATE_USER, payload);
+    }
   },
-  modules: {
-  }
-})
+  modules: {},
+  plugins: [createPersistedState()]
+});

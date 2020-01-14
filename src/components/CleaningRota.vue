@@ -159,6 +159,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import axios from "axios";
 
 export default {
@@ -186,6 +187,7 @@ export default {
     this.getItem();
     this.getCleaningRecord();
   },
+  computed: mapGetters(["getUser"]),
   methods: {
     /**
      * 掃除当番表アイテム取得
@@ -224,6 +226,7 @@ export default {
       this.recordList = await axios
         .get("http://localhost:8081/cleaning-rota/record", {
           params: {
+            dormitoryId: this.getUser.dormitoryId,
             yearMonth:
               new String(this.year) +
               new String(this.month >= 10 ? this.month : "0" + this.month)

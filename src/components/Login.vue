@@ -15,30 +15,17 @@
         <v-form class="login-form-layout">
           <!-- ユーザーID -->
           <v-layout>
-            <v-text-field
-              label="ユーザーID"
-              type="text"
-              v-model="userId"
-              required
-              autofocus
-            />
+            <v-text-field label="ユーザーID" type="text" v-model="userId" required autofocus />
           </v-layout>
           <!-- /ユーザーID -->
           <!-- パスワード -->
           <v-layout>
-            <v-text-field
-              label="パスワード"
-              type="password"
-              v-model="password"
-              required
-            />
+            <v-text-field label="パスワード" type="password" v-model="password" required />
           </v-layout>
           <!-- /パスワード -->
           <!-- ログインボタン -->
           <v-layout my-3 justify-center>
-            <v-btn outlined rounded class="blue blue-text" @click="loginAction"
-              >Log in</v-btn
-            >
+            <v-btn outlined rounded class="blue blue-text" @click="loginAction">Log in</v-btn>
           </v-layout>
           <!-- /ログインボタン -->
         </v-form>
@@ -86,9 +73,11 @@ export default {
       if (userInfo) {
         const user = {
           userId: userInfo.userId,
-          adminFlag: userInfo.configAdmin.adminFlag
+          adminFlag: userInfo.configAdmin.adminFlag,
+          dormitoryId: userInfo.dormitory.dormitoryId
         };
         this[UPDATE_USER](user);
+        // console.log(this.getUser);
         this.$router.push("/main-menu");
       } else {
         this.errorText = "ログイン認証に失敗しました。";
