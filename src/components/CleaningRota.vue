@@ -18,10 +18,14 @@
           hide-default-footer
           items-per-page="31"
           class="elevation-1"
+          fixed-header="true"
+          height="70vh"
         >
           <template v-slot:item="row">
             <tr>
-              <td>{{ row.item.date }}</td>
+              <td
+                :class="[{'saturday': row.item.weekDayNum === saturdayNum}, {'sunday': row.item.weekDayNum === sundayNum}]"
+              >{{ row.item.date }}{{ row.item.weekDay}}</td>
               <td>
                 <div v-if="row.item.kitchen.user.userId == null">
                   <v-btn v-show="switchDisp" class="blue">登録</v-btn>
@@ -161,10 +165,13 @@
 <script>
 import { mapGetters } from "vuex";
 import axios from "axios";
+import moment from "moment";
 
 export default {
   data() {
     return {
+      saturdayNum: "6",
+      sundayNum: "7",
       year: "",
       month: "",
       switchDisp: true,
@@ -241,11 +248,13 @@ export default {
           return null;
         });
       console.log("記録:", this.recordList);
-      this.recordList.forEach(elem => {
+      this.recordList.forEach(record => {
         let dayRecords = {
-          date: elem[0].executedDate
+          date: record[0].executedDate,
+          weekDay: "(" + moment(record[0].executedDate).format("ddd") + ")",
+          weekDayNum: moment(record[0].executedDate).format("E")
         };
-        elem.forEach(data => {
+        record.forEach(data => {
           dayRecords[data.item.itemValue] = {
             executedDate: data.executedDate,
             item: {
@@ -293,4 +302,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.saturday {
+  color: blue;
+}
+.sunday {
+  color: red;
+}
+</style>
