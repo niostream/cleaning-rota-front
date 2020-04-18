@@ -9,7 +9,7 @@
         <v-btn outlined rounded class="green accent-1" @click="prevRecord">前月</v-btn>
         <v-btn outlined rounded class="green accent-1" @click="switchDisp = !switchDisp">表示切替</v-btn>
         <v-btn outlined rounded class="green accent-1">Excel出力</v-btn>
-        <v-btn outlined rounded class="green accent-1" @click="nextRecord">次月</v-btn>
+        <v-btn outlined rounded class="green accent-1" @click="nextRecord">翌月</v-btn>
       </v-layout>
       <v-layout my-3>
         <v-data-table
@@ -24,11 +24,18 @@
           <template v-slot:item="row">
             <tr>
               <td
-                :class="[{'saturday': row.item.weekDayNum === saturdayNum}, {'sunday': row.item.weekDayNum === sundayNum}]"
-              >{{ row.item.date }}{{ row.item.weekDay}}</td>
+                :class="[
+                  { saturday: row.item.weekDayNum === saturdayNum },
+                  { sunday: row.item.weekDayNum === sundayNum },
+                ]"
+              >{{ row.item.date }}{{ row.item.weekDay }}</td>
               <td>
                 <div v-if="row.item.kitchen.user.userId == null">
-                  <v-btn v-show="switchDisp" class="blue">登録</v-btn>
+                  <v-btn
+                    v-show="switchDisp"
+                    class="blue"
+                    @click="registCleaningRecord(row.item.kitchen)"
+                  >登録</v-btn>
                 </div>
                 <div v-else>
                   <div>{{ row.item.kitchen.user.firstName }}</div>
@@ -155,7 +162,7 @@
         <v-btn outlined rounded class="green accent-1" @click="prevRecord">前月</v-btn>
         <v-btn outlined rounded class="green accent-1" @click="switchDisp = !switchDisp">表示切替</v-btn>
         <v-btn outlined rounded class="green accent-1">Excel出力</v-btn>
-        <v-btn outlined rounded class="green accent-1" @click="nextRecord">次月</v-btn>
+        <v-btn outlined rounded class="green accent-1" @click="nextRecord">翌月</v-btn>
       </v-layout>
     </v-container>
     <!-- /掃除当番表画面エリア -->
@@ -172,8 +179,7 @@ export default {
     return {
       saturdayNum: "6",
       sundayNum: "7",
-      year: "",
-      month: "",
+      executedDate: "",
       switchDisp: true,
       itemList: [],
       recordList: [],
@@ -188,9 +194,9 @@ export default {
     };
   },
   created() {
-    this.year = new Date().getFullYear();
-    this.month = new Date().getMonth() + 1;
-    // console.log("年月:", this.year, "/", this.month);
+    this.executedDate = moment(new Date().toLocaleDateString()).format(
+      "YYYY-MM-DD"
+    );
     this.getItem();
     this.getCleaningRecord();
   },
@@ -229,14 +235,12 @@ export default {
       // 初期化
       this.recordList = [];
       this.records = [];
-      // レコード設定
+      // レコード表示
       this.recordList = await axios
-        .get("http://localhost:8081/cleaning-rota/record", {
+        .get("http://localhost:8081/cleaning-rota/show-record", {
           params: {
             dormitoryId: this.getUser.dormitoryId,
-            yearMonth:
-              new String(this.year) +
-              new String(this.month >= 10 ? this.month : "0" + this.month)
+            executedDate: this.executedDate
           }
         })
         .then(res => {
@@ -272,30 +276,39 @@ export default {
       });
       console.log("記録2:", this.records);
     },
+    async registCleaningRecord(item) {
+      console.log("record:", item);
+      console.log("user:", this.getUser);
+      await axios
+        .get("http://localhost:8081/cleaning-rota/regist-record", {
+          params: {
+            item: item,
+            user: this.getUser
+          }
+        })
+        .then(res => {
+          console.log("res:", res);
+        })
+        .catch(error => {
+          console.log("error:", error);
+        });
+    },
     /**
      * `前月`ボタンクリック
      */
     prevRecord() {
-      if (this.month === 1) {
-        this.year -= 1;
-        this.month = 12;
-      } else {
-        this.month -= 1;
-      }
-      // console.log("前年月:", this.year, "/", this.month);
+      this.executedDate = moment(this.executedDate)
+        .subtract(1, "M")
+        .format("YYYY-MM-DD");
       this.getCleaningRecord();
     },
     /**
-     * `次月`ボタンクリック
+     * `翌月`ボタンクリック
      */
     nextRecord() {
-      if (this.month === 12) {
-        this.year += 1;
-        this.month = 1;
-      } else {
-        this.month += 1;
-      }
-      // console.log("後年月:", this.year, "/", this.month);
+      this.executedDate = moment(this.executedDate)
+        .add(1, "M")
+        .format("YYYY-MM-DD");
       this.getCleaningRecord();
     }
   }
