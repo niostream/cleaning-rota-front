@@ -6,10 +6,20 @@
         <h1>掃除当番表一覧</h1>
       </v-layout>
       <v-layout my-3 justify-space-around="1">
-        <v-btn outlined rounded class="green accent-1" @click="prevRecord">前月</v-btn>
-        <v-btn outlined rounded class="green accent-1" @click="switchDisp = !switchDisp">表示切替</v-btn>
+        <v-btn outlined rounded class="green accent-1" @click="prevRecord"
+          >前月</v-btn
+        >
+        <v-btn
+          outlined
+          rounded
+          class="green accent-1"
+          @click="switchDisp = !switchDisp"
+          >表示切替</v-btn
+        >
         <v-btn outlined rounded class="green accent-1">Excel出力</v-btn>
-        <v-btn outlined rounded class="green accent-1" @click="nextRecord">翌月</v-btn>
+        <v-btn outlined rounded class="green accent-1" @click="nextRecord"
+          >翌月</v-btn
+        >
       </v-layout>
       <v-layout my-3>
         <v-data-table
@@ -28,14 +38,17 @@
                   { saturday: row.item.weekDayNum === saturdayNum },
                   { sunday: row.item.weekDayNum === sundayNum },
                 ]"
-              >{{ row.item.date }}{{ row.item.weekDay }}</td>
+              >
+                {{ row.item.date }}{{ row.item.weekDay }}
+              </td>
               <td>
                 <div v-if="row.item.kitchen.user.userId == null">
                   <v-btn
                     v-show="switchDisp"
                     class="blue"
                     @click="registCleaningRecord(row.item.kitchen)"
-                  >登録</v-btn>
+                    >登録</v-btn
+                  >
                 </div>
                 <div v-else>
                   <div>{{ row.item.kitchen.user.firstName }}</div>
@@ -46,7 +59,12 @@
               </td>
               <td>
                 <div v-if="row.item.bath.user.userId == null">
-                  <v-btn v-show="switchDisp" class="blue">登録</v-btn>
+                  <v-btn
+                    v-show="switchDisp"
+                    class="blue"
+                    @click="registCleaningRecord(row.item.bath)"
+                    >登録</v-btn
+                  >
                 </div>
                 <div v-else>
                   <div>{{ row.item.bath.user.firstName }}</div>
@@ -57,7 +75,12 @@
               </td>
               <td>
                 <div v-if="row.item.toilet.user.userId == null">
-                  <v-btn v-show="switchDisp" class="blue">登録</v-btn>
+                  <v-btn
+                    v-show="switchDisp"
+                    class="blue"
+                    @click="registCleaningRecord(row.item.toilet)"
+                    >登録</v-btn
+                  >
                 </div>
                 <div v-else>
                   <div>{{ row.item.toilet.user.firstName }}</div>
@@ -68,7 +91,12 @@
               </td>
               <td>
                 <div v-if="row.item.basin.user.userId == null">
-                  <v-btn v-show="switchDisp" class="blue">登録</v-btn>
+                  <v-btn
+                    v-show="switchDisp"
+                    class="blue"
+                    @click="registCleaningRecord(row.item.basin)"
+                    >登録</v-btn
+                  >
                 </div>
                 <div v-else>
                   <div>{{ row.item.basin.user.firstName }}</div>
@@ -79,7 +107,12 @@
               </td>
               <td>
                 <div v-if="row.item.cleaner.user.userId == null">
-                  <v-btn v-show="switchDisp" class="blue">登録</v-btn>
+                  <v-btn
+                    v-show="switchDisp"
+                    class="blue"
+                    @click="registCleaningRecord(row.item.cleaner)"
+                    >登録</v-btn
+                  >
                 </div>
                 <div v-else>
                   <div>{{ row.item.cleaner.user.firstName }}</div>
@@ -90,7 +123,12 @@
               </td>
               <td>
                 <div v-if="row.item.combustible.user.userId == null">
-                  <v-btn v-show="switchDisp" class="blue">登録</v-btn>
+                  <v-btn
+                    v-show="switchDisp"
+                    class="blue"
+                    @click="registCleaningRecord(row.item.combustible)"
+                    >登録</v-btn
+                  >
                 </div>
                 <div v-else>
                   <div>{{ row.item.combustible.user.firstName }}</div>
@@ -101,7 +139,12 @@
               </td>
               <td>
                 <div v-if="row.item.incombustible.user.userId == null">
-                  <v-btn v-show="switchDisp" class="blue">登録</v-btn>
+                  <v-btn
+                    v-show="switchDisp"
+                    class="blue"
+                    @click="registCleaningRecord(row.item.incombustible)"
+                    >登録</v-btn
+                  >
                 </div>
                 <div v-else>
                   <div>{{ row.item.incombustible.user.firstName }}</div>
@@ -112,7 +155,12 @@
               </td>
               <td>
                 <div v-if="row.item.resource.user.userId == null">
-                  <v-btn v-show="switchDisp" class="blue">登録</v-btn>
+                  <v-btn
+                    v-show="switchDisp"
+                    class="blue"
+                    @click="registCleaningRecord(row.item.resource)"
+                    >登録</v-btn
+                  >
                 </div>
                 <div v-else>
                   <div>{{ row.item.resource.user.firstName }}</div>
@@ -123,7 +171,12 @@
               </td>
               <td>
                 <div v-if="row.item.electricity.user.userId == null">
-                  <v-btn v-show="switchDisp" class="blue">登録</v-btn>
+                  <v-btn
+                    v-show="switchDisp"
+                    class="blue"
+                    @click="registCleaningRecord(row.item.electricity)"
+                    >登録</v-btn
+                  >
                 </div>
                 <div v-else>
                   <div>{{ row.item.electricity.user.firstName }}</div>
@@ -134,7 +187,12 @@
               </td>
               <td>
                 <div v-if="row.item.gas.user.userId == null">
-                  <v-btn v-show="switchDisp" class="blue">登録</v-btn>
+                  <v-btn
+                    v-show="switchDisp"
+                    class="blue"
+                    @click="registCleaningRecord(row.item.gas)"
+                    >登録</v-btn
+                  >
                 </div>
                 <div v-else>
                   <div>{{ row.item.gas.user.firstName }}</div>
@@ -145,7 +203,12 @@
               </td>
               <td>
                 <div v-if="row.item.tap.user.userId == null">
-                  <v-btn v-show="switchDisp" class="blue">登録</v-btn>
+                  <v-btn
+                    v-show="switchDisp"
+                    class="blue"
+                    @click="registCleaningRecord(row.item.tap)"
+                    >登録</v-btn
+                  >
                 </div>
                 <div v-else>
                   <div>{{ row.item.tap.user.firstName }}</div>
@@ -159,10 +222,20 @@
         </v-data-table>
       </v-layout>
       <v-layout my-3 justify-space-around="1">
-        <v-btn outlined rounded class="green accent-1" @click="prevRecord">前月</v-btn>
-        <v-btn outlined rounded class="green accent-1" @click="switchDisp = !switchDisp">表示切替</v-btn>
+        <v-btn outlined rounded class="green accent-1" @click="prevRecord"
+          >前月</v-btn
+        >
+        <v-btn
+          outlined
+          rounded
+          class="green accent-1"
+          @click="switchDisp = !switchDisp"
+          >表示切替</v-btn
+        >
         <v-btn outlined rounded class="green accent-1">Excel出力</v-btn>
-        <v-btn outlined rounded class="green accent-1" @click="nextRecord">翌月</v-btn>
+        <v-btn outlined rounded class="green accent-1" @click="nextRecord"
+          >翌月</v-btn
+        >
       </v-layout>
     </v-container>
     <!-- /掃除当番表画面エリア -->
@@ -187,10 +260,10 @@ export default {
         {
           text: "日付",
           sortable: false,
-          value: "date"
-        }
+          value: "date",
+        },
       ],
-      records: []
+      records: [],
     };
   },
   created() {
@@ -208,22 +281,22 @@ export default {
     async getItem() {
       this.itemList = await axios
         .get("http://localhost:8081/cleaning-rota/item-list")
-        .then(res => {
+        .then((res) => {
           console.log(res);
           return res.data;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           return null;
         });
       if (this.itemList === null) {
         return;
       }
-      this.itemList.forEach(element => {
+      this.itemList.forEach((element) => {
         this.headers.push({
           text: element.itemName,
           sortable: false,
-          value: element.itemValue
+          value: element.itemValue,
         });
       });
       // console.log("アイテム:", this.itemList);
@@ -240,36 +313,36 @@ export default {
         .get("http://localhost:8081/cleaning-rota/show-record", {
           params: {
             dormitoryId: this.getUser.dormitoryId,
-            executedDate: this.executedDate
-          }
+            executedDate: this.executedDate,
+          },
         })
-        .then(res => {
+        .then((res) => {
           console.log(res);
           return res.data;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           return null;
         });
       console.log("記録:", this.recordList);
-      this.recordList.forEach(record => {
+      this.recordList.forEach((record) => {
         let dayRecords = {
           date: record[0].executedDate,
           weekDay: "(" + moment(record[0].executedDate).format("ddd") + ")",
-          weekDayNum: moment(record[0].executedDate).format("E")
+          weekDayNum: moment(record[0].executedDate).format("E"),
         };
-        record.forEach(data => {
+        record.forEach((data) => {
           dayRecords[data.item.itemValue] = {
             executedDate: data.executedDate,
             item: {
               itemId: data.item.itemId,
               itemName: data.item.itemName,
-              itemValue: data.item.itemValue
+              itemValue: data.item.itemValue,
             },
             user: {
               userId: data.user.userId,
-              firstName: data.user.firstName
-            }
+              firstName: data.user.firstName,
+            },
           };
         });
         this.records.push(dayRecords);
@@ -277,19 +350,18 @@ export default {
       console.log("記録2:", this.records);
     },
     async registCleaningRecord(item) {
-      console.log("record:", item);
-      console.log("user:", this.getUser);
       await axios
         .get("http://localhost:8081/cleaning-rota/regist-record", {
           params: {
             item: item,
-            user: this.getUser
-          }
+            user: this.getUser,
+          },
         })
-        .then(res => {
+        .then((res) => {
           console.log("res:", res);
+          this.getCleaningRecord();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log("error:", error);
         });
     },
@@ -310,8 +382,8 @@ export default {
         .add(1, "M")
         .format("YYYY-MM-DD");
       this.getCleaningRecord();
-    }
-  }
+    },
+  },
 };
 </script>
 
