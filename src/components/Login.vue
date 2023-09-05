@@ -56,7 +56,7 @@ export default {
     ...mapActions([UPDATE_USER]),
     async loginAction() {
       const userInfo = await axios
-        .get("http://localhost:8081/login", {
+        .get("http://localhost:8092/login", {
           params: {
             userId: this.userId,
             password: this.password

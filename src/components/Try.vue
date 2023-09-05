@@ -25,7 +25,7 @@ export default {
     async dummy() {
       console.log("start!");
       const x = await axios
-        .get("http://localhost:8081/cleaning-rota/param", {
+        .get("http://localhost:8092/cleaning-rota/param", {
           params: {
             fromDate: "2019-06-01",
             toDate: "2019-07-01"

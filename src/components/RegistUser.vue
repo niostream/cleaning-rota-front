@@ -85,7 +85,7 @@ export default {
   methods: {
     async registUserAction() {
       const x = await axios
-        .get("http://localhost:8081/regist-user", {
+        .get("http://localhost:8092/regist-user", {
           params: {
             userId: this.userId,
             password: this.password,

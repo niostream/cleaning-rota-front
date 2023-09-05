@@ -107,7 +107,7 @@ export default {
       // パスワード更新
       // TODO: Postメソッドに変更する必要があるが、SpringSecurityの関係上エラーになる。
       const updateResult = await axios
-        .get("http://localhost:8081/change-password/update", {
+        .get("http://localhost:8092/change-password/update", {
           params: {
             userId: this.getUser.userId,
             defaultPassword: this.defaultPassword,

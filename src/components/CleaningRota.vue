@@ -247,7 +247,7 @@ export default {
      */
     async getItem() {
       this.itemList = await axios
-        .get("http://localhost:8081/cleaning-rota/item-list")
+        .get("http://localhost:8092/cleaning-rota/item-list")
         .then(res => {
           console.log(res);
           return res.data;
@@ -277,7 +277,7 @@ export default {
       this.records = [];
       // レコード表示
       this.recordList = await axios
-        .get("http://localhost:8081/cleaning-rota/show-record", {
+        .get("http://localhost:8092/cleaning-rota/show-record", {
           params: {
             dormitoryId: this.getUser.dormitoryId,
             executedDate: this.executedDate
@@ -318,7 +318,7 @@ export default {
     },
     async registCleaningRecord(item) {
       await axios
-        .get("http://localhost:8081/cleaning-rota/regist-record", {
+        .get("http://localhost:8092/cleaning-rota/regist-record", {
           params: {
             item: item,
             user: this.getUser
@@ -334,7 +334,7 @@ export default {
     },
     async cancelCleaningRecord(item) {
       await axios
-        .get("http://localhost:8081/cleaning-rota/cancel-record", {
+        .get("http://localhost:8092/cleaning-rota/cancel-record", {
           params: {
             item: item,
             user: this.getUser
