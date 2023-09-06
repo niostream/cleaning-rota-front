@@ -1,0 +1,1 @@
+{"version":"0.1.0","name":"cleaning-rota-front","dependencies":{"axios":{"version":"1.5.0"},"core-js":{"version":"3.32.1"},"moment":{"version":"2.29.4"},"vue-router":{"version":"3.6.5"},"vue":{"version":"2.7.14"},"vuetify":{"version":"2.7.1"},"vuex-persistedstate":{"version":"2.7.1"},"vuex":{"version":"3.6.2"}}}
