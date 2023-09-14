@@ -55,13 +55,11 @@ export default {
   methods: {
     ...mapActions([UPDATE_USER]),
     async loginAction() {
+      var postParameter = new URLSearchParams();
+      postParameter.append('userId', this.userId);
+      postParameter.append('password', this.password);
       const userInfo = await axios
-        .get("http://localhost:8092/login", {
-          params: {
-            userId: this.userId,
-            password: this.password
-          }
-        })
+        .post("http://localhost:8092/login", postParameter)
         .then(res => {
           console.log(res);
           return res.data;

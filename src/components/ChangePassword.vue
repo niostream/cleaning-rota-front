@@ -69,6 +69,17 @@
             >
           </v-layout>
           <!-- /変更ボタン -->
+          <!-- 戻るボタン -->
+          <v-layout my-3 justify-center>
+            <v-btn
+              outlined
+              rounded
+              class="blue blue-text"
+              @click="forwardMainMenu"
+              >戻る</v-btn
+            >
+          </v-layout>
+          <!-- /戻るボタン -->
         </v-form>
         <!-- /パスワード変更フォーム -->
       </v-layout>
@@ -105,15 +116,12 @@ export default {
         return;
       }
       // パスワード更新
-      // TODO: Postメソッドに変更する必要があるが、SpringSecurityの関係上エラーになる。
+      var postParameter = new URLSearchParams();
+      postParameter.append('userId', this.getUser.userId);
+      postParameter.append('defaultPassword', this.defaultPassword);
+      postParameter.append('changePassword', this.changePassword);
       const updateResult = await axios
-        .get("http://localhost:8092/change-password/update", {
-          params: {
-            userId: this.getUser.userId,
-            defaultPassword: this.defaultPassword,
-            changePassword: this.changePassword
-          }
-        })
+        .post("http://localhost:8092/change-password/update", postParameter)
         .then(res => {
           return res.data;
         })
@@ -166,6 +174,9 @@ export default {
         return false;
       }
       return true;
+    },
+    forwardMainMenu() {
+      this.$router.push("/main-menu");
     },
     doNext() {
       // TODO: モーダルの`閉じる`ボタンを押さないと遷移できないので、外側のアクションでも遷移出来るようにしたい。
